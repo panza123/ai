@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-    return NextResponse.json([
+export async function GET(req: NextRequest) {
+    const data = [
         {
             "id": 1,
             "pic": "https://images.pexels.com/photos/8294666/pexels-photo-8294666.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -26,5 +26,19 @@ export async function GET() {
             "title": "Space Exploration",
             "desc": "Space exploration is the ongoing investigation and discovery of outer space using a variety of technological tools and methods. It encompasses both human and robotic missions to study celestial bodies, understand the universe's origins and composition, and potentially establish a human presence beyond Earth. Here are some key aspects of space exploration:"
         }
-    ]);
+    ];
+
+    // Add CORS headers
+    const headers = {
+        'Access-Control-Allow-Origin': '*', // Change '*' to your specific origin if needed
+        'Access-Control-Allow-Methods': 'GET,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    // Check if it's a preflight request
+    if (req.method === 'OPTIONS') {
+        return NextResponse.json(null, { headers });
+    }
+
+    return NextResponse.json(data, { headers });
 }
