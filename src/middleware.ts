@@ -11,14 +11,16 @@ export async function middleware(req: NextRequest) {
         credentials: 'include' // Include cookies in the request
       });
 
-      // Create a new response based on the forwarded response
-      const modifiedResponse = new NextResponse(response.body, response);
+      // Read the response body as text
+      const responseBody = await response.text();
+
+      // Create a new response with the forwarded response body
+      const modifiedResponse = new NextResponse(responseBody, response);
 
       // Set cookies in the response
-      modifiedResponse.cookies.set('cookieName', 'cookieValue', {
+      modifiedResponse.cookies.set('blog', 'http://localhost:3000/api/users', {
         // cookie options
-        // For example, you can set the cookie's path, domain, max-age, etc.
-        path: '/', // Set cookie path
+        path: '/blog', // Set cookie path
         maxAge: 3600, // Set cookie expiration time (in seconds)
         secure: true, // Set cookie secure flag
         sameSite: 'none' // Set cookie sameSite attribute
