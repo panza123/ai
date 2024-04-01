@@ -1,18 +1,18 @@
-import { ThemeProvider } from 'next-themes';
+import { ReactNode } from 'react';
+import { ThemeProvider as NextThemeProvider } from 'next-themes';
 
-interface ThemeProvider {
-  children: string[];
+interface CustomThemeProviderProps {
+  children: ReactNode;
 }
 
-const Provider: React.FC<ThemeProvider[]> = ({ children }:any) => {
+const CustomThemeProvider: React.FC<CustomThemeProviderProps> = ({ children }) => {
   return (
-    <ThemeProvider defaultTheme="system"  attribute='class'>
-      
+    <NextThemeProvider defaultTheme="system" attribute='class'>
       <div className='text-gray-700 dark:text-gray-200 dark:bg-gray-700 min-h-screen select-none duration-300'>
         {children}
       </div>
-    </ThemeProvider>
+    </NextThemeProvider>
   );
 };
 
-export default Provider;
+export default CustomThemeProvider;
