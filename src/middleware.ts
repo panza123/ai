@@ -19,9 +19,10 @@ export async function middleware(req: NextRequest) {
 
       // Set cookies in the response
       modifiedResponse.cookies.set('blog', 'http://localhost:3000/api/users', {
+        // cookie options
         path: '/blog', // Set cookie path
         maxAge: 3600, // Set cookie expiration time (in seconds)
-        secure: false, // Set cookie secure flag (change to false if not using HTTPS locally)
+        secure: true, // Set cookie secure flag
         sameSite: 'none' // Set cookie sameSite attribute
       });
 
@@ -32,8 +33,5 @@ export async function middleware(req: NextRequest) {
       // If an error occurs, return a NextResponse with an error status code
       return new NextResponse(null, { status: 500 }); // Specify the error status code
     }
-  } else {
-    // If the pathname is not '/blog', continue with the regular flow
-    return await NextResponse.next(req);
   }
 }
