@@ -8,10 +8,24 @@ export async function middleware(req: NextRequest) {
         method: req.method, // Forward the original request method
         headers: req.headers, // Forward the original request headers
         body: req.body, // Forward the original request body
+        credentials: 'include' // Include cookies in the request
       });
 
-      // Return the response from the forwarded request
-      return response;
+      // Create a new response based on the forwarded response
+      const modifiedResponse = new NextResponse(response.body, response);
+
+      // Set cookies in the response
+      modifiedResponse.cookies.set('cookieName', 'cookieValue', {
+        // cookie options
+        // For example, you can set the cookie's path, domain, max-age, etc.
+        path: '/', // Set cookie path
+        maxAge: 3600, // Set cookie expiration time (in seconds)
+        secure: true, // Set cookie secure flag
+        sameSite: 'none' // Set cookie sameSite attribute
+      });
+
+      // Return the modified response
+      return modifiedResponse;
     } catch (error) {
       console.error('Error forwarding request:', error);
       // If an error occurs, return a NextResponse with an error status code
