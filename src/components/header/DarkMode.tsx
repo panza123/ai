@@ -11,7 +11,7 @@ export default function DarkMode() {
     // {use to change background}
 
            
-            <div className='mt-1'>
+            <div className='mt-1 mr-2 '>
                 <button onClick={()=> setTheme(theme ==="dark"? "light" : "dark")}>
                        {currentTheme === "dark"? <MdLightMode/>:<MdDarkMode/>}
                 </button>

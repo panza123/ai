@@ -1,61 +1,93 @@
 "use client";
-
 import React, { useState } from "react";
-import navlink from "./index"; // Assuming NavLink is the correct import
-import Navlink from "./Navlink";
+import navlink from "./index"; // Assuming navlink is an array of blog items
+import Link from "next/link";
 import DarkMode from "./DarkMode";
+import { usePathname } from "next/dist/client/components/navigation";
+import { FaTimes } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
-import { RxCross2 } from "react-icons/rx";
-interface Props {
+interface Blog {
   id: number;
-  tittle: string;
-  link: string;
+  title: string;
   path: string;
-  item: string;
 }
 
-// {create link when u can clink onto next page}
-
-const Header: React.FC<Props> = () => {
-  const [nav, setNav] = useState<boolean>(false);
-  function handleclick() {
+const Header: React.FC = () => {
+  const pathname = usePathname();
+  const [nav, setNav] = useState(false);
+  function handeleClick() {
     setNav(!nav);
   }
+
   return (
-    <div className="w-full h-10 flex justify-between items-center px-2 lg:px-16 py-9 bg-slate-300 ">
-      <h1 className="text-2xl text-red-500 font-bold">AI</h1>
-      <div className="flex gap-5">
-        {navlink.map((item, index) => (
-          <div className="hidden lg:flex gap-3 ">
-            <Navlink item={item} index={index} />
-          </div>
-        ))}
-        <DarkMode />
-
-        <div className="lg:hidden cursor-pointer  z-40" onClick={handleclick}>
-          {!nav ? (
-            <CiMenuBurger size={20} className="text-black" />
-          ) : (
-            <RxCross2 size={20} className="text-black" />
-          )}
-        </div>
+    <header className="w-full h-10 flex justify-between items-center px-2 lg:px-16 py-9 bg-slate-300 relative">
+      <div className="flex w-full h-full justify-between items-center">
+        <h1 className="font-bold text-3xl text-black">AI</h1>
+        <nav className="hidden lg:flex items-center gap-2">
+          <DarkMode />
+          {navlink.map((item: Blog) => (
+            <ul key={item.id} className="font-2xl">
+              <li key={item.id}>
+                <Link
+                  href={item.path}
+                  className={`text-2xl ${
+                    pathname === item.path
+                      ? "rounded-[20px] p-3 bg-black text-white"
+                      : ""
+                  }`}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            </ul>
+          ))}
+        </nav>
+        {/* {menu toogle} */}
       </div>
-
-      {/* {menuHumburger} */}
+      <div className="flex lg:hidden items-center">
+      <DarkMode/>
+      <div
+        className="block lg:hidden cursor-pointer z-20"
+        onClick={handeleClick}
+      >
+        
+        {!nav ? (
+          <CiMenuBurger className="text-black" />
+        ) : (
+          <FaTimes className="text-black" />
+        )}
+      </div>
+      </div>
+      {/* {menuDisplay} */}
       <menu
         className={
           nav
-            ? "w-full h-screen absolute left-0 top-0 z-20 bg-white/90 mx-auto  gap-7 flex flex-col justify-center  items-center lg:hidden "
+            ? "absolute top-0 left-0 w-full h-screen flex justify-center items-center bg-white z-10 text-black"
             : "hidden"
         }
+        onClick={handeleClick}
       >
-        {navlink.map((item, index) => (
-          <div className="" onClick={handleclick}>
-            <Navlink item={item} index={index} />
-          </div>
-        ))}
+     
+        <nav className="flex flex-col gap-4  lg:hidden">
+          {navlink.map((item: Blog) => (
+            <ul key={item.id} className="font-2xl">
+              <li key={item.id}>
+                <Link
+                  href={item.path}
+                  className={`text-2xl ${
+                    pathname === item.path
+                      ? "rounded-[20px] p-3 bg-black text-white"
+                      : ""
+                  }`}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            </ul>
+          ))}
+        </nav>
       </menu>
-    </div>
+    </header>
   );
 };
 

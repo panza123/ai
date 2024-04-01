@@ -2,19 +2,19 @@
 const navlink=[
     {
         id:1,
-        tittle:'Home',
+        title:'Home',
         path:'/'
 
     },
     {
         id:2,
-        tittle:'About',
+        title:'About',
         path:'/about'
 
     },
     {
         id:3,
-        tittle:'Blog',
+        title:'Blog',
         path:'/blog'
 
     },

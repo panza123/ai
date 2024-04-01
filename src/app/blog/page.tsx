@@ -1,7 +1,4 @@
-"use client"
-
-
-
+"use client";
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -54,7 +51,11 @@ const Blog: React.FC = () => {
       {!selectedBlog && (
         <div className="w-full h-full py-5 gap-5 grid grid-cols-2">
           {blogs.map((blog) => (
-            <div key={blog.id} onClick={() => handleClick(blog)} style={{ cursor: "pointer" }}>
+            <div
+              key={blog.id}
+              onClick={() => handleClick(blog)}
+              style={{ cursor: "pointer" }}
+            >
               <div className="max-w-[500px]">
                 <div className="w-full h-[300px] relative">
                   <Image
@@ -73,8 +74,8 @@ const Blog: React.FC = () => {
       )}
       {selectedBlog && (
         <div className=" ">
-       
-          <div className="w-full h-[300px] relative mt-2"> 
+          <div>
+          <div className="w-full h-[300px] relative mt-2">
             <Image
               src={selectedBlog.pic}
               alt={selectedBlog.title}
@@ -84,11 +85,18 @@ const Blog: React.FC = () => {
           </div>
           <h2 className="font-bold pt-2">{selectedBlog.title}</h2>
           <p className="">{selectedBlog.desc}</p>
+</div>
+
+<button
+        onClick={handleBack}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        Back
+      </button>
         </div>
+        
       )}
-         <button onClick={handleBack} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-            Back
-          </button>
+   
     </div>
   );
 };
